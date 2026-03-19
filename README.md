@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/github/license/PeterCha90/CAP?style=for-the-badge" alt="License" />
 </p>
 
-<h1 align="center">CAP</h1>
+<h1 align="center">🧢 CAP</h1>
 <h3 align="center">Claude Allowance Pulse</h3>
 
 <p align="center">
@@ -32,14 +32,14 @@
 
 ## What It Shows
 
-| Segment | Description |
-|---------|-------------|
-| `🐙 Opus 4.6` | Current model (Opus=🐙, Sonnet=☄️, Haiku=💨) |
-| `🧺 73%(4h32m)` | 5-hour window utilization + time until reset |
-| `📅 Week: 45%(3d21h)` | 7-day window utilization + time until reset |
-| `🗃️ 42% ctx` | Context window usage |
-| `💰 $0.47` | Session cost so far |
-| `Update 👾` | Shown only when a new version is available |
+| Segment               | Description                                  |
+| --------------------- | -------------------------------------------- |
+| `🐙 Opus 4.6`         | Current model (Opus=🐙, Sonnet=☄️, Haiku=💨) |
+| `🧺 73%(4h32m)`       | 5-hour window utilization + time until reset |
+| `📅 Week: 45%(3d21h)` | 7-day window utilization + time until reset  |
+| `🗃️ 42% ctx`          | Context window usage                         |
+| `💰 $0.47`            | Session cost so far                          |
+| `Update 👾`           | Shown only when a new version is available   |
 
 **Line 1** displays model, 5-hour session usage (with reset countdown), and weekly usage.
 
@@ -49,12 +49,12 @@
 
 Usage percentages change color as they increase:
 
-| Utilization | Color |
-|-------------|-------|
-| < 50% | 🟢 Green |
-| 50–69% | 🟡 Yellow |
-| 70–84% | 🟡 Yellow (Bold) |
-| >= 85% | 🔴 Red (Bold) |
+| Utilization | Color            |
+| ----------- | ---------------- |
+| < 50%       | 🟢 Green         |
+| 50–69%      | 🟡 Yellow        |
+| 70–84%      | 🟡 Yellow (Bold) |
+| >= 85%      | 🔴 Red (Bold)    |
 
 ---
 
@@ -75,11 +75,11 @@ Restart Claude Code. The HUD will appear at the bottom of your terminal.
 
 Edit `scripts/usage-hud.mjs`:
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `USAGE_TTL` | `60000` (60s) | How long to cache Usage API responses. Increase to `120000` if you hit 429 rate limits. |
-| `UPDATE_TTL` | `21600000` (6h) | How often to check for new versions |
-| Color thresholds | 50/70/85% | Breakpoints for green/yellow/red color transitions |
+| Setting          | Default         | Description                                                                             |
+| ---------------- | --------------- | --------------------------------------------------------------------------------------- |
+| `USAGE_TTL`      | `60000` (60s)   | How long to cache Usage API responses. Increase to `120000` if you hit 429 rate limits. |
+| `UPDATE_TTL`     | `21600000` (6h) | How often to check for new versions                                                     |
+| Color thresholds | 50/70/85%       | Breakpoints for green/yellow/red color transitions                                      |
 
 ---
 
@@ -92,6 +92,7 @@ bash ~/.claude/plugins/cap/scripts/uninstall.sh
 ```
 
 This will:
+
 - Restore your previous `statusLine` setting (if a backup exists)
 - Remove all cache files
 - Delete the plugin directory
@@ -102,12 +103,12 @@ Restart Claude Code after running the script.
 
 ## Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| HUD not showing | Check `statusLine` in `~/.claude/settings.json`, then restart Claude Code |
-| Usage shows `--` | OAuth token not found — verify with `security find-generic-password -s "Claude Code-credentials" -w` |
-| Frequent 429 errors | Increase `USAGE_TTL` to `120000` or higher |
-| Stale data | Delete cache files in `~/.claude/hud/` and restart |
+| Problem             | Solution                                                                                             |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| HUD not showing     | Check `statusLine` in `~/.claude/settings.json`, then restart Claude Code                            |
+| Usage shows `--`    | OAuth token not found — verify with `security find-generic-password -s "Claude Code-credentials" -w` |
+| Frequent 429 errors | Increase `USAGE_TTL` to `120000` or higher                                                           |
+| Stale data          | Delete cache files in `~/.claude/hud/` and restart                                                   |
 
 ---
 
