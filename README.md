@@ -66,32 +66,13 @@ Claude Code 하단 statusline에 **사용량 + 컨텍스트 + 비용 + 업데이
 
 ### 설치
 
-```bash
-# GitHub에서 clone
-git clone https://github.com/PeterCha90/CAP.git ~/.claude/plugins/cap
+Claude Code 안에서:
 
-# Claude Code settings.json에 statusLine 추가
-# (SessionStart 훅이 자동으로 설정해주지만, 수동으로도 가능)
+```
+/install-plugin PeterCha90/CAP
 ```
 
-`~/.claude/settings.json`:
-
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "node ~/.claude/plugins/cap/scripts/usage-hud.mjs"
-  }
-}
-```
-
-Claude Code를 재시작하면 statusline이 활성화됩니다.
-
-### 요구사항
-
-- Node.js 18+ (built-in `fetch` 사용)
-- Claude Code (OAuth 인증된 상태)
-- macOS (Keychain) 또는 `~/.claude/.credentials.json`
+Claude Code를 재시작하면 statusline이 자동으로 활성화됩니다.
 
 ### 커스터마이징
 
@@ -161,34 +142,13 @@ Usage percentages change color as they increase:
 
 ## Installation
 
-Clone the repo into your Claude Code plugins directory:
+Inside Claude Code:
 
-```bash
-git clone https://github.com/PeterCha90/CAP.git ~/.claude/plugins/cap
 ```
-
-Then add the statusline to your `~/.claude/settings.json`:
-
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "node ~/.claude/plugins/cap/scripts/usage-hud.mjs"
-  }
-}
+/install-plugin PeterCha90/CAP
 ```
 
 Restart Claude Code. The HUD will appear at the bottom of your terminal.
-
-> **Note:** If installed as a plugin with SessionStart hooks enabled, the statusline is configured automatically on session start.
-
----
-
-## Requirements
-
-- **Node.js 18+** — uses built-in `fetch()` and `AbortSignal.timeout()`
-- **Claude Code** — with OAuth authentication
-- **macOS Keychain** or `~/.claude/.credentials.json` for OAuth token access
 
 ---
 
