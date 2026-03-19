@@ -13,6 +13,7 @@ Configure the cap statusline display.
 |---------|-------------|
 | `/cap:setup` | Install or repair HUD statusline |
 | `/cap:status` | Show HUD diagnostics |
+| `/cap:uninstall` | Completely remove CAP and restore previous settings |
 
 ## Customization
 

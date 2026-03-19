@@ -100,6 +100,21 @@ Claude Code를 재시작하면 statusline이 활성화됩니다.
 - `USAGE_TTL` — Usage API 캐시 TTL (기본 60초). 429 에러가 잦으면 120초로 증가
 - 색상 임계값 — 50% / 70% / 85% 기준으로 Green → Yellow → Red 전환
 
+### 삭제
+
+깔끔하게 제거하려면:
+
+```bash
+bash ~/.claude/plugins/cap/scripts/uninstall.sh
+```
+
+이 스크립트는 다음을 수행합니다:
+- `settings.json`의 `statusLine`을 이전 설정으로 복원 (백업이 있으면)
+- 캐시 파일 삭제
+- 플러그인 디렉토리 삭제
+
+실행 후 Claude Code를 재시작하면 완전히 제거됩니다.
+
 ### 문제 해결
 
 | 문제 | 해결 |
@@ -214,6 +229,23 @@ Edit `scripts/usage-hud.mjs`:
 
 ---
 
+## Uninstall
+
+To completely remove CAP:
+
+```bash
+bash ~/.claude/plugins/cap/scripts/uninstall.sh
+```
+
+This will:
+- Restore your previous `statusLine` setting (if a backup exists)
+- Remove all cache files
+- Delete the plugin directory
+
+Restart Claude Code after running the script.
+
+---
+
 ## Troubleshooting
 
 | Problem | Solution |
@@ -233,12 +265,14 @@ cap/
 │   └── plugin.json          # Plugin manifest
 ├── commands/
 │   ├── setup.md             # /cap:setup
-│   └── status.md            # /cap:status
+│   ├── status.md            # /cap:status
+│   └── uninstall.md         # /cap:uninstall
 ├── hooks/
 │   └── hooks.json           # SessionStart hook
 ├── scripts/
 │   ├── usage-hud.mjs        # Main statusline script
-│   └── setup-statusline.sh  # Auto-config on session start
+│   ├── setup-statusline.sh  # Auto-config on session start
+│   └── uninstall.sh         # Clean uninstall script
 ├── skills/
 │   └── usage-hud/
 │       └── SKILL.md         # HUD configuration skill
