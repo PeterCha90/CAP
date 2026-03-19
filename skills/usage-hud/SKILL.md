@@ -5,14 +5,14 @@ description: Configure and customize the Usage HUD statusline display
 
 # Usage HUD Skill
 
-Configure the claude-usage-hud statusline display.
+Configure the cap statusline display.
 
 ## Quick Commands
 
 | Command | Description |
 |---------|-------------|
-| `/claude-usage-hud:setup` | Install or repair HUD statusline |
-| `/claude-usage-hud:status` | Show HUD diagnostics |
+| `/cap:setup` | Install or repair HUD statusline |
+| `/cap:status` | Show HUD diagnostics |
 
 ## Customization
 
@@ -24,6 +24,6 @@ Edit the thresholds in `scripts/usage-hud.mjs`:
 
 ## Troubleshooting
 
-- HUD not showing → Run `/claude-usage-hud:setup`, then restart Claude Code
-- Usage shows `--` → Check OAuth token with `/claude-usage-hud:status`
+- HUD not showing → Run `/cap:setup`, then restart Claude Code
+- Usage shows `--` → Check OAuth token with `/cap:status`
 - Frequent `[API 429]` → Increase `CACHE_TTL_MS` to 120000 or higher

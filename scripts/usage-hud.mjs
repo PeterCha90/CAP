@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// claude-usage-hud — statusline script
+// cap — statusline script
 // No npm dependencies. Node.js built-ins only.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
@@ -141,7 +141,7 @@ async function fetchUsage(token) {
         "Authorization": `Bearer ${token}`,
         "anthropic-beta": "oauth-2025-04-20",
         "Content-Type": "application/json",
-        "User-Agent": "claude-usage-hud/1.0",
+        "User-Agent": "cap/1.0",
       },
       signal: AbortSignal.timeout(5000),
     });
@@ -190,8 +190,11 @@ async function checkUpdate() {
 
 // ── Build Segments ───────────────────────────────────────────────────────────
 
-function buildSegments(stdin, usage, updateAvailable) {
-  const segments = [];
+function buildOutput(stdin, usage, updateAvailable) {
+  const line1 = [];
+  const line2 = [];
+
+  // ── Line 1: Model │ Session(5h) │ Week(7d) ──
 
   // 1. Model Indicator
   if (stdin?.model) {
@@ -205,7 +208,7 @@ function buildSegments(stdin, usage, updateAvailable) {
     const name = typeof displayName === "string"
       ? displayName.replace(/^Claude\s+/i, "")
       : String(displayName);
-    segments.push(`${emoji} ${BOLD}${MAGENTA}${name}${RST}`);
+    line1.push(`${emoji} ${BOLD}${MAGENTA}${name}${RST}`);
   }
 
   // 2. Session Usage (5h)
@@ -214,9 +217,9 @@ function buildSegments(stdin, usage, updateAvailable) {
     const color = colorByThreshold(pct);
     const remaining = formatRemainingTime(usage.five_hour.resets_at);
     const timePart = remaining != null ? `${DIM}(${remaining})${RST}` : "";
-    segments.push(`\uD83D\uDC68\u200D\uD83D\uDCBB ${color}${pct}%${RST}${timePart}`);
+    line1.push(`\uD83E\uDDFA ${color}${pct}%${RST}${timePart}`);
   } else {
-    segments.push(`\uD83D\uDC68\u200D\uD83D\uDCBB ${DIM}--${RST}`);
+    line1.push(`\uD83E\uDDFA ${DIM}--${RST}`);
   }
 
   // 3. Weekly Usage (7d)
@@ -225,30 +228,36 @@ function buildSegments(stdin, usage, updateAvailable) {
     const color = colorByThreshold(pct);
     const remaining = formatRemainingTime(usage.seven_day.resets_at);
     const timePart = remaining != null ? `${DIM}(${remaining})${RST}` : "";
-    segments.push(`\uD83D\uDCC5 ${WHITE}Week:${RST} ${color}${pct}%${RST}${timePart}`);
+    line1.push(`\uD83D\uDCC5 ${WHITE}Week:${RST} ${color}${pct}%${RST}${timePart}`);
   } else {
-    segments.push(`\uD83D\uDCC5 ${WHITE}Week:${RST} ${DIM}--${RST}`);
+    line1.push(`\uD83D\uDCC5 ${WHITE}Week:${RST} ${DIM}--${RST}`);
   }
+
+  // ── Line 2: Context │ Cost │ [Update] ──
 
   // 4. Context Window
   if (stdin?.context_window?.used_percentage != null) {
     const pct = Math.round(stdin.context_window.used_percentage);
     const color = colorByThreshold(pct);
-    segments.push(`${color}${pct}% ctx${RST}`);
+    line2.push(`\uD83D\uDDC3\uFE0F ${color}${pct}% ctx${RST}`);
   }
 
   // 5. Session Cost
   if (stdin?.cost?.total_cost_usd != null) {
     const cost = stdin.cost.total_cost_usd.toFixed(2);
-    segments.push(`${DIM}$${cost}${RST}`);
+    line2.push(`\uD83D\uDCB0 ${DIM}$${cost}${RST}`);
   }
 
   // 6. Update Indicator
   if (updateAvailable) {
-    segments.push(`${BOLD}${CYAN}Update \uD83D\uDC7E${RST}`);
+    line2.push(`${BOLD}${CYAN}Update \uD83D\uDC7E${RST}`);
   }
 
-  return segments;
+  const parts = [line1.join(SEP)];
+  if (line2.length > 0) {
+    parts.push(line2.join(SEP));
+  }
+  return parts.join("\n");
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -271,8 +280,8 @@ async function main() {
   ]);
 
   // Build and output
-  const segments = buildSegments(stdin, usage, updateAvailable);
-  process.stdout.write(segments.join(SEP));
+  const output = buildOutput(stdin, usage, updateAvailable);
+  process.stdout.write(output);
 }
 
 main().catch(() => {
