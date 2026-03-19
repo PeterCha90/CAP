@@ -61,7 +61,13 @@ Claude Code를 재시작하면 statusline이 자동으로 활성화됩니다.
 
 ### 삭제
 
-깔끔하게 제거하려면:
+Claude Code 안에서:
+
+```
+/cap:uninstall
+```
+
+또는 직접 실행:
 
 ```bash
 bash ~/.claude/plugins/cap/scripts/uninstall.sh

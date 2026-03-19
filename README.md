@@ -85,7 +85,13 @@ Edit `scripts/usage-hud.mjs`:
 
 ## Uninstall
 
-To completely remove CAP:
+Inside Claude Code:
+
+```
+/cap:uninstall
+```
+
+Or manually:
 
 ```bash
 bash ~/.claude/plugins/cap/scripts/uninstall.sh
