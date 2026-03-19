@@ -1,0 +1,259 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet?style=for-the-badge" alt="Claude Code Plugin" />
+  <img src="https://img.shields.io/github/v/tag/PeterCha90/CAP?style=for-the-badge&label=version&color=blue" alt="Version" />
+  <img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=for-the-badge" alt="Zero Dependencies" />
+  <img src="https://img.shields.io/github/license/PeterCha90/CAP?style=for-the-badge" alt="License" />
+</p>
+
+<h1 align="center">CAP</h1>
+<h3 align="center">Claude Anthropic Power-meter</h3>
+
+<p align="center">
+  A lightweight Claude Code statusline plugin that displays<br/>
+  <b>usage limits, context window, cost, and update alerts</b> in real time.
+</p>
+
+<p align="center">
+  Zero bloat. Zero dependencies. Just the statusline.
+</p>
+
+---
+
+```
+🐙 Opus 4.6 │ 🧺 73%(4h32m) │ 📅 Week: 45%(3d21h)
+🗃️ 42% ctx │ 💰 $0.47 │ Update 👾
+```
+
+---
+
+<details>
+<summary><b>🇰🇷 한국어 README</b></summary>
+
+## CAP — Claude Anthropic Power-meter
+
+Claude Code 하단 statusline에 **사용량 + 컨텍스트 + 비용 + 업데이트 알림**을 실시간으로 표시하는 경량 플러그인입니다.
+
+### 출력 예시
+
+```
+🐙 Opus 4.6 │ 🧺 73%(4h32m) │ 📅 Week: 45%(3d21h)
+🗃️ 42% ctx │ 💰 $0.47
+```
+
+**Line 1** — 모델명 + 5시간 윈도우 사용량(리셋까지 남은 시간) + 7일 윈도우 사용량
+
+**Line 2** — 컨텍스트 윈도우 사용률 + 세션 누적 비용 + (업데이트 알림)
+
+### 세그먼트 설명
+
+| 세그먼트 | 설명 |
+|----------|------|
+| `🐙 Opus 4.6` | 현재 모델 (Opus=🐙, Sonnet=☄️, Haiku=💨) |
+| `🧺 73%(4h32m)` | 5시간 윈도우 사용률 + 리셋까지 남은 시간 |
+| `📅 Week: 45%(3d21h)` | 7일 윈도우 사용률 + 리셋까지 남은 시간 |
+| `🗃️ 42% ctx` | 컨텍스트 윈도우 사용률 |
+| `💰 $0.47` | 현재 세션 누적 비용 |
+| `Update 👾` | 새 버전이 있을 때만 표시 |
+
+### 색상 규칙
+
+| 사용률 | 색상 |
+|--------|------|
+| < 50% | 🟢 Green |
+| 50–69% | 🟡 Yellow |
+| 70–84% | 🟡 Yellow (Bold) |
+| >= 85% | 🔴 Red (Bold) |
+
+### 설치
+
+```bash
+# GitHub에서 clone
+git clone https://github.com/PeterCha90/CAP.git ~/.claude/plugins/cap
+
+# Claude Code settings.json에 statusLine 추가
+# (SessionStart 훅이 자동으로 설정해주지만, 수동으로도 가능)
+```
+
+`~/.claude/settings.json`:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node ~/.claude/plugins/cap/scripts/usage-hud.mjs"
+  }
+}
+```
+
+Claude Code를 재시작하면 statusline이 활성화됩니다.
+
+### 요구사항
+
+- Node.js 18+ (built-in `fetch` 사용)
+- Claude Code (OAuth 인증된 상태)
+- macOS (Keychain) 또는 `~/.claude/.credentials.json`
+
+### 커스터마이징
+
+`scripts/usage-hud.mjs`에서 조정 가능:
+
+- `USAGE_TTL` — Usage API 캐시 TTL (기본 60초). 429 에러가 잦으면 120초로 증가
+- 색상 임계값 — 50% / 70% / 85% 기준으로 Green → Yellow → Red 전환
+
+### 문제 해결
+
+| 문제 | 해결 |
+|------|------|
+| HUD가 안 보임 | `settings.json`에 `statusLine` 설정 확인 후 Claude Code 재시작 |
+| 사용량이 `--`로 표시 | OAuth 토큰 확인 — `security find-generic-password -s "Claude Code-credentials" -w` |
+| `[API 429]` 빈발 | `USAGE_TTL`을 120000 이상으로 증가 |
+
+### 라이선스
+
+MIT
+
+</details>
+
+---
+
+## What It Shows
+
+| Segment | Description |
+|---------|-------------|
+| `🐙 Opus 4.6` | Current model (Opus=🐙, Sonnet=☄️, Haiku=💨) |
+| `🧺 73%(4h32m)` | 5-hour window utilization + time until reset |
+| `📅 Week: 45%(3d21h)` | 7-day window utilization + time until reset |
+| `🗃️ 42% ctx` | Context window usage |
+| `💰 $0.47` | Session cost so far |
+| `Update 👾` | Shown only when a new version is available |
+
+**Line 1** displays model, 5-hour session usage (with reset countdown), and weekly usage.
+
+**Line 2** displays context window percentage, accumulated session cost, and update alerts.
+
+### Color Coding
+
+Usage percentages change color as they increase:
+
+| Utilization | Color |
+|-------------|-------|
+| < 50% | 🟢 Green |
+| 50–69% | 🟡 Yellow |
+| 70–84% | 🟡 Yellow (Bold) |
+| >= 85% | 🔴 Red (Bold) |
+
+---
+
+## Installation
+
+Clone the repo into your Claude Code plugins directory:
+
+```bash
+git clone https://github.com/PeterCha90/CAP.git ~/.claude/plugins/cap
+```
+
+Then add the statusline to your `~/.claude/settings.json`:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node ~/.claude/plugins/cap/scripts/usage-hud.mjs"
+  }
+}
+```
+
+Restart Claude Code. The HUD will appear at the bottom of your terminal.
+
+> **Note:** If installed as a plugin with SessionStart hooks enabled, the statusline is configured automatically on session start.
+
+---
+
+## Requirements
+
+- **Node.js 18+** — uses built-in `fetch()` and `AbortSignal.timeout()`
+- **Claude Code** — with OAuth authentication
+- **macOS Keychain** or `~/.claude/.credentials.json` for OAuth token access
+
+---
+
+## How It Works
+
+```
+┌──────────────────┐      stdin (JSON)      ┌──────────────────┐
+│   Claude Code    │ ────────────────────→  │  usage-hud.mjs   │
+│   statusLine     │                        │                  │
+│   engine         │ ←──────────────────── │  + fetch() API   │
+└──────────────────┘      stdout (text)     └────────┬─────────┘
+                                                     │
+                                            ┌────────▼─────────┐
+                                            │  Cache files      │
+                                            │  .usage-cache     │
+                                            │  .update-cache    │
+                                            └──────────────────┘
+```
+
+1. Claude Code pipes session data (model, context, cost) via **stdin** as JSON
+2. The script fetches usage data from the **Anthropic OAuth API** (cached for 60s)
+3. Checks for updates against the GitHub repo's `package.json` (cached for 6h)
+4. Outputs a formatted two-line statusline to **stdout**
+
+All external calls are cached and fail gracefully — the script never crashes, never blocks, and never prints errors.
+
+---
+
+## Customization
+
+Edit `scripts/usage-hud.mjs`:
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `USAGE_TTL` | `60000` (60s) | How long to cache Usage API responses. Increase to `120000` if you hit 429 rate limits. |
+| `UPDATE_TTL` | `21600000` (6h) | How often to check for new versions |
+| Color thresholds | 50/70/85% | Breakpoints for green/yellow/red color transitions |
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| HUD not showing | Check `statusLine` in `~/.claude/settings.json`, then restart Claude Code |
+| Usage shows `--` | OAuth token not found — verify with `security find-generic-password -s "Claude Code-credentials" -w` |
+| Frequent 429 errors | Increase `USAGE_TTL` to `120000` or higher |
+| Stale data | Delete cache files in `~/.claude/hud/` and restart |
+
+---
+
+## Project Structure
+
+```
+cap/
+├── .claude-plugin/
+│   └── plugin.json          # Plugin manifest
+├── commands/
+│   ├── setup.md             # /cap:setup
+│   └── status.md            # /cap:status
+├── hooks/
+│   └── hooks.json           # SessionStart hook
+├── scripts/
+│   ├── usage-hud.mjs        # Main statusline script
+│   └── setup-statusline.sh  # Auto-config on session start
+├── skills/
+│   └── usage-hud/
+│       └── SKILL.md         # HUD configuration skill
+├── package.json
+└── LICENSE
+```
+
+---
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+<p align="center">
+  Made by <a href="https://github.com/PeterCha90">Peter Cha</a>
+</p>
