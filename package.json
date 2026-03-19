@@ -1,0 +1,11 @@
+{
+  "name": "cap",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Lightweight Claude Code statusline HUD — usage, context, cost, update check",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PeterCha90/CAP"
+  },
+  "license": "MIT"
+}

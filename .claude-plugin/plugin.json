@@ -1,0 +1,12 @@
+{
+  "name": "cap",
+  "version": "1.0.0",
+  "description": "Lightweight statusline HUD showing usage (5h/7d), context window, cost, and update alerts. Zero bloat — just the statusline.",
+  "author": {
+    "name": "Peter Cha",
+    "url": "https://github.com/PeterCha90"
+  },
+  "repository": "https://github.com/PeterCha90/CAP",
+  "license": "MIT",
+  "keywords": ["statusline", "usage", "hud", "rate-limit", "context"]
+}

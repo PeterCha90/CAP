@@ -1,0 +1,16 @@
+{
+  "description": "Auto-configure statusLine on session start",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/setup-statusline.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
