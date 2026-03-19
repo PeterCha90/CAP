@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet?style=for-the-badge" alt="Claude Code Plugin" />
-  <img src="https://img.shields.io/github/v/tag/PeterCha90/CAP?style=for-the-badge&label=version&color=blue" alt="Version" />
+  <img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge" alt="Version" />
   <img src="https://img.shields.io/badge/dependencies-zero-brightgreen?style=for-the-badge" alt="Zero Dependencies" />
   <img src="https://img.shields.io/github/license/PeterCha90/CAP?style=for-the-badge" alt="License" />
 </p>
@@ -69,7 +69,8 @@ Claude Code 하단 statusline에 **사용량 + 컨텍스트 + 비용 + 업데이
 Claude Code 안에서:
 
 ```
-/install-plugin PeterCha90/CAP
+/plugin marketplace add PeterCha90/CAP
+/plugin install cap
 ```
 
 Claude Code를 재시작하면 statusline이 자동으로 활성화됩니다.
@@ -145,35 +146,11 @@ Usage percentages change color as they increase:
 Inside Claude Code:
 
 ```
-/install-plugin PeterCha90/CAP
+/plugin marketplace add PeterCha90/CAP
+/plugin install cap
 ```
 
 Restart Claude Code. The HUD will appear at the bottom of your terminal.
-
----
-
-## How It Works
-
-```
-┌──────────────────┐      stdin (JSON)      ┌──────────────────┐
-│   Claude Code    │ ────────────────────→  │  usage-hud.mjs   │
-│   statusLine     │                        │                  │
-│   engine         │ ←──────────────────── │  + fetch() API   │
-└──────────────────┘      stdout (text)     └────────┬─────────┘
-                                                     │
-                                            ┌────────▼─────────┐
-                                            │  Cache files      │
-                                            │  .usage-cache     │
-                                            │  .update-cache    │
-                                            └──────────────────┘
-```
-
-1. Claude Code pipes session data (model, context, cost) via **stdin** as JSON
-2. The script fetches usage data from the **Anthropic OAuth API** (cached for 60s)
-3. Checks for updates against the GitHub repo's `package.json` (cached for 6h)
-4. Outputs a formatted two-line statusline to **stdout**
-
-All external calls are cached and fail gracefully — the script never crashes, never blocks, and never prints errors.
 
 ---
 
@@ -222,7 +199,8 @@ Restart Claude Code after running the script.
 ```
 cap/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin manifest
+│   ├── plugin.json          # Plugin manifest
+│   └── marketplace.json     # Marketplace manifest
 ├── commands/
 │   ├── setup.md             # /cap:setup
 │   ├── status.md            # /cap:status

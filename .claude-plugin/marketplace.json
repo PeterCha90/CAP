@@ -1,0 +1,26 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cap",
+  "description": "Lightweight statusline HUD showing usage (5h/7d), context window, cost, and update alerts",
+  "owner": {
+    "name": "Peter Cha",
+    "url": "https://github.com/PeterCha90"
+  },
+  "plugins": [
+    {
+      "name": "cap",
+      "description": "Lightweight statusline HUD showing usage (5h/7d), context window, cost, and update alerts. Zero bloat — just the statusline.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Peter Cha",
+        "url": "https://github.com/PeterCha90"
+      },
+      "source": "./",
+      "category": "utility",
+      "homepage": "https://github.com/PeterCha90/CAP",
+      "repository": "https://github.com/PeterCha90/CAP",
+      "license": "MIT",
+      "keywords": ["statusline", "usage", "hud", "rate-limit", "context"]
+    }
+  ]
+}
