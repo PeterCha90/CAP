@@ -206,7 +206,7 @@ function buildOutput(stdin, usage, updateAvailable) {
       if (displayName.includes("Haiku"))  emoji = "\uD83D\uDCA8";  // 💨
     }
     const name = typeof displayName === "string"
-      ? displayName.replace(/^Claude\s+/i, "")
+      ? displayName.replace(/^Claude\s+/i, "").replace(/\s*\(.*?\)/, "")
       : String(displayName);
     line1.push(`${emoji} ${BOLD}${MAGENTA}${name}${RST}`);
   }
