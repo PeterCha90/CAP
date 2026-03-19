@@ -1,4 +1,4 @@
-# CAP — Claude Anthropic Power-meter
+# CAP — Claude Allowance Pulse
 
 Claude Code 하단 statusline에 **사용량 + 컨텍스트 + 비용 + 업데이트 알림**을 실시간으로 표시하는 경량 플러그인입니다.
 

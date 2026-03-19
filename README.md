@@ -6,7 +6,7 @@
 </p>
 
 <h1 align="center">CAP</h1>
-<h3 align="center">Claude Anthropic Power-meter</h3>
+<h3 align="center">Claude Allowance Pulse</h3>
 
 <p align="center">
   A lightweight Claude Code statusline plugin that displays<br/>
