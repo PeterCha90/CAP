@@ -67,7 +67,13 @@ Inside Claude Code:
 /plugin install cap
 ```
 
-Restart Claude Code or run `/reload-plugins` to apply. The HUD will appear at the bottom of your terminal.
+Then apply the statusline with one of these methods:
+
+1. Run `/cap:setup` inside Claude Code (recommended — works on all platforms)
+2. Run `/reload-plugins` to reload plugins
+3. Restart Claude Code
+
+The HUD will appear at the bottom of your terminal.
 
 ---
 
@@ -111,7 +117,8 @@ Restart Claude Code after running the script.
 
 | Problem             | Solution                                                                                             |
 | ------------------- | ---------------------------------------------------------------------------------------------------- |
-| HUD not showing     | Check `statusLine` in `~/.claude/settings.json`, then restart Claude Code                            |
+| HUD not showing     | Run `/cap:setup` to configure the statusline, then restart Claude Code                                |
+| HUD not showing after `/reload-plugins` (Windows) | `/reload-plugins` may not configure the statusline on Windows. Run `/cap:setup` instead |
 | Usage shows `--`    | OAuth token not found — verify with `security find-generic-password -s "Claude Code-credentials" -w` |
 | Frequent 429 errors | Increase `USAGE_TTL` to `120000` or higher                                                           |
 | Stale data          | Delete cache files in `~/.claude/hud/` and restart                                                   |

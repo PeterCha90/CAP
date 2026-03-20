@@ -50,7 +50,11 @@ Claude Code 안에서:
 /plugin install cap
 ```
 
-Claude Code를 재시작하거나 `/reload-plugins`를 실행하면 statusline이 자동으로 활성화됩니다.
+다음 방법 중 하나로 statusline을 활성화하세요:
+
+1. `/cap:setup` 실행 (권장 — 모든 플랫폼에서 동작)
+2. `/reload-plugins` 실행
+3. Claude Code 재시작
 
 ### 커스터마이징
 
@@ -85,7 +89,8 @@ bash ~/.claude/plugins/cap/scripts/uninstall.sh
 
 | 문제                 | 해결                                                                               |
 | -------------------- | ---------------------------------------------------------------------------------- |
-| HUD가 안 보임        | `settings.json`에 `statusLine` 설정 확인 후 Claude Code 재시작                     |
+| HUD가 안 보임        | `/cap:setup` 실행 후 Claude Code 재시작                                             |
+| Windows에서 `/reload-plugins` 후에도 HUD가 안 보임 | `/reload-plugins`가 statusline을 설정하지 못할 수 있습니다. `/cap:setup`을 실행하세요 |
 | 사용량이 `--`로 표시 | OAuth 토큰 확인 — `security find-generic-password -s "Claude Code-credentials" -w` |
 | `[API 429]` 빈발     | `USAGE_TTL`을 120000 이상으로 증가                                                 |
 
