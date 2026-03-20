@@ -50,7 +50,7 @@ Claude Code 안에서:
 /plugin install cap
 ```
 
-Claude Code를 재시작하면 statusline이 자동으로 활성화됩니다.
+Claude Code를 재시작하거나 `/reload-plugins`를 실행하면 statusline이 자동으로 활성화됩니다.
 
 ### 커스터마이징
 

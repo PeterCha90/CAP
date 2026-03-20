@@ -67,7 +67,7 @@ Inside Claude Code:
 /plugin install cap
 ```
 
-Restart Claude Code. The HUD will appear at the bottom of your terminal.
+Restart Claude Code or run `/reload-plugins` to apply. The HUD will appear at the bottom of your terminal.
 
 ---
 
