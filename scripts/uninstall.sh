@@ -19,19 +19,29 @@ node -e "
   let settings = {};
   try { settings = JSON.parse(fs.readFileSync(path, 'utf8')); } catch { process.exit(0); }
 
+  // Remove statusLine if set to CAP
   const current = settings.statusLine?.command || '';
-  if (!current.includes('usage-hud')) {
-    console.log('   statusLine is not set to CAP — skipping.');
-    process.exit(0);
+  if (current.includes('usage-hud')) {
+    if (settings._statusLine_backup) {
+      settings.statusLine = settings._statusLine_backup;
+      delete settings._statusLine_backup;
+      console.log('   Restored previous statusLine from backup.');
+    } else {
+      delete settings.statusLine;
+      console.log('   Removed statusLine.');
+    }
   }
 
-  if (settings._statusLine_backup) {
-    settings.statusLine = settings._statusLine_backup;
-    delete settings._statusLine_backup;
-    console.log('   Restored previous statusLine from backup.');
-  } else {
-    delete settings.statusLine;
-    console.log('   Removed statusLine.');
+  // Remove cap from enabledPlugins
+  if (settings.enabledPlugins?.['cap@cap']) {
+    delete settings.enabledPlugins['cap@cap'];
+    console.log('   Removed cap@cap from enabledPlugins.');
+  }
+
+  // Remove cap from extraKnownMarketplaces
+  if (settings.extraKnownMarketplaces?.cap) {
+    delete settings.extraKnownMarketplaces.cap;
+    console.log('   Removed cap from extraKnownMarketplaces.');
   }
 
   fs.writeFileSync(path, JSON.stringify(settings, null, 2) + '\n');
