@@ -78,6 +78,38 @@ The HUD will appear at the bottom of your terminal.
 
 ---
 
+## Update
+
+When the HUD shows `Update 👾`, a new version is available. Run the
+following inside Claude Code, **in order**:
+
+```
+/plugin marketplace update cap
+/plugin update cap
+```
+
+Then **fully quit and restart Claude Code** (`/reload-plugins` is not
+enough — the `SessionStart` hook that repins the statusline only runs on
+a fresh session start).
+
+If `Update 👾` is still showing after a restart, fall back to a clean
+reinstall:
+
+```
+/cap:uninstall
+```
+
+Restart Claude Code, then:
+
+```
+/plugin install cap
+/cap:setup
+```
+
+Restart Claude Code one more time and the indicator will clear.
+
+---
+
 ## Customization
 
 Edit `scripts/usage-hud.mjs`:

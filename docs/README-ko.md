@@ -57,6 +57,35 @@ Claude Code 안에서:
 2. `/reload-plugins` 실행
 3. Claude Code 재시작
 
+### 업데이트
+
+HUD에 `Update 👾`가 뜨면 새 버전이 있다는 뜻입니다. Claude Code 안에서
+**아래 순서대로** 실행하세요:
+
+```
+/plugin marketplace update cap
+/plugin update cap
+```
+
+그다음 **Claude Code를 완전히 종료한 뒤 재시작**하세요
+(`/reload-plugins`만으로는 부족합니다 — statusline 경로를 새 버전으로 다시
+연결해주는 `SessionStart` 훅은 새 세션이 시작될 때만 실행됩니다).
+
+재시작 후에도 `Update 👾`가 계속 보이면 깨끗이 재설치합니다:
+
+```
+/cap:uninstall
+```
+
+Claude Code를 재시작한 뒤:
+
+```
+/plugin install cap
+/cap:setup
+```
+
+다시 한 번 Claude Code를 재시작하면 알림이 사라집니다.
+
 ### 커스터마이징
 
 `scripts/usage-hud.mjs`에서 조정 가능:
