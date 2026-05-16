@@ -21,7 +21,7 @@
 
 ```
 🐙 Opus 4.6 │ 🧺 73%(4h32m) │ 📅 Week: 45%(3d21h)
-🗃️ 42% ctx │ 💰 $0.47 │ Update 👾
+🌳 main │ 🗃️ 42% ctx │ 💰 $0.47 │ Update 👾
 ```
 
 ---
@@ -37,13 +37,14 @@
 | `🐙 Opus 4.6`         | Current model (Opus=🐙, Sonnet=☄️, Haiku=💨) |
 | `🧺 73%(4h32m)`       | 5-hour window utilization + time until reset |
 | `📅 Week: 45%(3d21h)` | 7-day window utilization + time until reset  |
+| `🌳 main`             | Current git branch (shown only inside a git repo) |
 | `🗃️ 42% ctx`          | Context window usage                         |
 | `💰 $0.47`            | Session cost so far                          |
 | `Update 👾`           | Shown only when a new version is available   |
 
 **Line 1** displays model, 5-hour session usage (with reset countdown), and weekly usage.
 
-**Line 2** displays context window percentage, accumulated session cost, and update alerts.
+**Line 2** displays the current git branch (only inside a git repo), context window percentage, accumulated session cost, and update alerts.
 
 ### Color Coding
 

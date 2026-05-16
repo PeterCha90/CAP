@@ -122,6 +122,37 @@ function getOAuthToken() {
   return null;
 }
 
+// ── Git Branch ───────────────────────────────────────────────────────────────
+
+function getGitBranch(cwd) {
+  if (!cwd) return null;
+  try {
+    const branch = execSync("git rev-parse --abbrev-ref HEAD", {
+      cwd,
+      timeout: 500,
+      stdio: ["pipe", "pipe", "pipe"],
+    }).toString().trim();
+
+    if (!branch) return null;
+    if (branch === "HEAD") {
+      // Detached HEAD — use short SHA
+      try {
+        const sha = execSync("git rev-parse --short HEAD", {
+          cwd,
+          timeout: 500,
+          stdio: ["pipe", "pipe", "pipe"],
+        }).toString().trim();
+        return sha || null;
+      } catch {
+        return null;
+      }
+    }
+    return branch;
+  } catch {
+    return null;
+  }
+}
+
 // ── Usage API ────────────────────────────────────────────────────────────────
 
 async function fetchUsage(token) {
@@ -233,22 +264,29 @@ function buildOutput(stdin, usage, updateAvailable) {
     line1.push(`\uD83D\uDCC5 ${WHITE}Week:${RST} ${DIM}--${RST}`);
   }
 
-  // ── Line 2: Context │ Cost │ [Update] ──
+  // ── Line 2: [Branch] │ Context │ Cost │ [Update] ──
 
-  // 4. Context Window
+  // 4. Git Branch (only when git repo detected)
+  const cwd = stdin?.workspace?.current_dir || stdin?.cwd || process.cwd();
+  const branch = getGitBranch(cwd);
+  if (branch) {
+    line2.push(`🌳 ${GREEN}${branch}${RST}`);
+  }
+
+  // 5. Context Window
   if (stdin?.context_window?.used_percentage != null) {
     const pct = Math.round(stdin.context_window.used_percentage);
     const color = colorByThreshold(pct);
     line2.push(`\uD83D\uDDC3\uFE0F ${color}${pct}% ctx${RST}`);
   }
 
-  // 5. Session Cost
+  // 6. Session Cost
   if (stdin?.cost?.total_cost_usd != null) {
     const cost = stdin.cost.total_cost_usd.toFixed(2);
     line2.push(`\uD83D\uDCB0 ${DIM}$${cost}${RST}`);
   }
 
-  // 6. Update Indicator
+  // 7. Update Indicator
   if (updateAvailable) {
     line2.push(`${BOLD}${CYAN}Update \uD83D\uDC7E${RST}`);
   }
