@@ -1,6 +1,6 @@
 {
   "name": "cap",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Lightweight statusline HUD showing usage (5h/7d), context window, cost, and update alerts. Zero bloat — just the statusline.",
   "author": {
     "name": "Peter Cha",

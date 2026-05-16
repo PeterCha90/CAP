@@ -12,13 +12,24 @@ node -e "
   try { settings = JSON.parse(fs.readFileSync(path, 'utf8')); } catch {}
 
   const current = settings.statusLine?.command || '';
-  if (current.includes('usage-hud')) process.exit(0);
 
-  if (settings.statusLine) {
+  // Already pointing at the current install path — nothing to do.
+  if (current === hudCmd) process.exit(0);
+
+  const isCapAlready = current.includes('usage-hud');
+
+  // Only back up the user's original statusLine the first time we touch it,
+  // and never overwrite the backup with a CAP-owned statusLine (which would
+  // happen on every plugin upgrade if we weren't careful).
+  if (settings.statusLine && !isCapAlready && !settings._statusLine_backup) {
     settings._statusLine_backup = settings.statusLine;
   }
 
   settings.statusLine = { type: 'command', command: hudCmd };
   fs.writeFileSync(path, JSON.stringify(settings, null, 2) + '\n');
-  process.stderr.write('[usage-hud] statusLine configured. Restart Claude Code to activate.\n');
+  if (isCapAlready) {
+    process.stderr.write('[usage-hud] statusLine repinned to current plugin version.\n');
+  } else {
+    process.stderr.write('[usage-hud] statusLine configured. Restart Claude Code to activate.\n');
+  }
 "
